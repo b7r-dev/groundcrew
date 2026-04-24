@@ -1,5 +1,4 @@
 import fs from 'node:fs';
-import { DEFAULT_LIMITS } from '../config.js';
 
 const MAX_SCAN_BYTES = 8 * 1024;
 

@@ -1,6 +1,6 @@
 import { DEFAULT_LIMITS } from '../config.js';
 
-export function capOutput(text: string, maxBytes = DEFAULT_LIMITS.maxOutputBytes): {
+export function capOutput(text: string, maxBytes: number = DEFAULT_LIMITS.maxOutputBytes): {
   output: string;
   truncated: boolean;
   outputBytes: number;
@@ -18,7 +18,7 @@ export function capOutput(text: string, maxBytes = DEFAULT_LIMITS.maxOutputBytes
   return { output: slice, truncated: true, outputBytes: encoder.encode(slice).length };
 }
 
-export function capResults<T>(results: T[], maxResults = DEFAULT_LIMITS.maxResults): {
+export function capResults<T>(results: T[], maxResults: number = DEFAULT_LIMITS.maxResults): {
   items: T[];
   truncated: boolean;
   count: number;
