@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { WORKSPACE_ROOT, IGNORED_DIRS, DEFAULT_LIMITS } from '../config.js';
 import { resolveWorkspacePath } from '../utils/path.js';
-import { capResults } from '../utils/limits.js';
+import { capResults, capOutput } from '../utils/limits.js';
 import { runCommand } from '../utils/spawn.js';
 
 interface FindResult {
@@ -219,7 +219,7 @@ export async function searchContext({
     }
   }
 
-  const { truncated, outputBytes } = require('../utils/limits.js').capOutput(
+  const { truncated, outputBytes } = capOutput(
     result.stdout,
     maxOutputBytes,
   );
