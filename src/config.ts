@@ -16,4 +16,4 @@ export const IGNORED_DIRS = new Set([
   '.cache',
 ]);
 
-export const WORKSPACE_ROOT = process.cwd();
+export const WORKSPACE_ROOT = process.env.GROUNDCREW_WORKSPACE_ROOT || process.cwd();
