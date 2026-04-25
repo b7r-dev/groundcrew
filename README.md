@@ -77,7 +77,7 @@ Add to your Claude Desktop config (`~/Library/Application Support/Claude/claude_
   "mcpServers": {
     "groundcrew": {
       "command": "npx",
-      "args": ["@b7r_dev/groundcrew"],
+      "args": ["-y", "@b7r_dev/groundcrew"],
       "cwd": "/path/to/your/project"
     }
   }
@@ -91,7 +91,7 @@ Add to your Claude Desktop config (`~/Library/Application Support/Claude/claude_
   "name": "groundcrew",
   "transport": "stdio",
   "command": "npx",
-  "args": ["@b7r_dev/groundcrew"],
+  "args": ["-y", "@b7r_dev/groundcrew"],
   "cwd": "/path/to/your/project"
 }
 ```
