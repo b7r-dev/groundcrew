@@ -1,5 +1,5 @@
 {
-  "name": "@b7r/groundcrew",
+  "name": "@b7r_dev/groundcrew",
   "version": "0.1.0",
   "description": "A local stdio MCP server that gives coding agents safe deterministic access to common local developer operations.",
   "license": "MIT",
@@ -7,7 +7,7 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "bin": {
-    "groundcrew": "./dist/index.js"
+    "groundcrew": "dist/index.js"
   },
   "files": [
     "dist/**/*",
