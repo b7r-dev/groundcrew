@@ -158,6 +158,36 @@ npm run typecheck
 npm run build
 ```
 
+## Project structure
+
+```
+src/
+├── index.ts          # Entry point, stdio transport
+├── server.ts         # MCP server registration, tool routing
+├── config.ts         # Limits, ignored dirs, workspace root
+├── errors.ts         # GroundcrewError class
+├── tools/
+│   ├── workspace.ts  # workspace_info, detect_project, list_project_commands
+│   ├── filesystem.ts # path_info, ensure_dir, move/copy/safe_move
+│   ├── search.ts     # find_files, search_context
+│   ├── preview.ts    # preview_file
+│   ├── git.ts        # git_status, git_diff_stat, git_diff
+│   ├── edits.ts      # replace_text, replace_regex
+│   └── project.ts    # detect_project, list_project_commands
+└── utils/
+    ├── path.ts       # resolveWorkspacePath, isInsideWorkspace
+    ├── limits.ts     # capOutput, capResults
+    ├── spawn.ts      # runCommand with timeout/byte cap
+    ├── binary.ts     # isBinaryFile, refuseBinary
+    └── diff.ts       # unifiedDiff generation
+test/
+├── safety.test.ts
+├── filesystem.test.ts
+├── preview.test.ts
+├── edits.test.ts
+└── project.test.ts
+```
+
 ## License
 
 MIT
