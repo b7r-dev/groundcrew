@@ -1,6 +1,6 @@
 {
   "name": "@b7r_dev/groundcrew",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "A local stdio MCP server that gives coding agents safe deterministic access to common local developer operations.",
   "keywords": [
     "mcp",
@@ -17,7 +17,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/b7r/groundcrew.git"
+    "url": "git+https://github.com/b7r_dev/groundcrew.git"
   },
   "type": "module",
   "main": "./dist/index.js",
