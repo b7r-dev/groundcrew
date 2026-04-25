@@ -2,6 +2,18 @@
   "name": "@b7r_dev/groundcrew",
   "version": "0.1.0",
   "description": "A local stdio MCP server that gives coding agents safe deterministic access to common local developer operations.",
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "model-context-protocol",
+    "agent-tools",
+    "developer-tools",
+    "cli",
+    "filesystem",
+    "git",
+    "search",
+    "stdio"
+  ],
   "license": "MIT",
   "type": "module",
   "main": "./dist/index.js",
