@@ -3,15 +3,20 @@
 ## Run locally
 
 ```bash
-npm install
-npm run dev
+npm install @b7r_dev/groundcrew
+npx groundcrew
 ```
 
-Or build and run the binary:
+Or run without installing:
 
 ```bash
-npm run build
-./dist/index.js
+npx @b7r_dev/groundcrew
+```
+
+Or run from source:
+
+```bash
+npm run dev
 ```
 
 This starts the MCP stdio server. It expects to be launched by an MCP client, not run directly in an interactive shell.
@@ -27,7 +32,7 @@ Add this to your Claude Desktop config:
   "mcpServers": {
     "groundcrew": {
       "command": "npx",
-      "args": ["groundcrew"],
+      "args": ["@b7r_dev/groundcrew"],
       "cwd": "/path/to/your/project"
     }
   }
@@ -41,7 +46,7 @@ Add this to your Claude Desktop config:
   "name": "groundcrew",
   "transport": "stdio",
   "command": "npx",
-  "args": ["groundcrew"],
+  "args": ["@b7r_dev/groundcrew"],
   "cwd": "/path/to/your/project"
 }
 ```

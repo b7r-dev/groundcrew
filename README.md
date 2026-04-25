@@ -27,11 +27,17 @@ Groundcrew is a local stdio MCP server that exposes workspace-scoped, output-cap
 Install and run instantly:
 
 ```bash
-npm install @b7r/groundcrew
+npm install @b7r_dev/groundcrew
 npx groundcrew
 ```
 
-Or run directly from source:
+Or run directly without installing:
+
+```bash
+npx @b7r_dev/groundcrew
+```
+
+Or run from source:
 
 ```bash
 npm run dev
@@ -71,7 +77,7 @@ Add to your Claude Desktop config (`~/Library/Application Support/Claude/claude_
   "mcpServers": {
     "groundcrew": {
       "command": "npx",
-      "args": ["groundcrew"],
+      "args": ["@b7r_dev/groundcrew"],
       "cwd": "/path/to/your/project"
     }
   }
@@ -85,7 +91,7 @@ Add to your Claude Desktop config (`~/Library/Application Support/Claude/claude_
   "name": "groundcrew",
   "transport": "stdio",
   "command": "npx",
-  "args": ["groundcrew"],
+  "args": ["@b7r_dev/groundcrew"],
   "cwd": "/path/to/your/project"
 }
 ```
