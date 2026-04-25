@@ -2,6 +2,8 @@
 
 A local stdio MCP server that gives coding agents safe, deterministic access to common local developer operations.
 
+> **For coding agents:** See [AGENT_QUICKSTART.md](./AGENT_QUICKSTART.md) for the fastest path to using Groundcrew effectively.
+
 ## What problem it solves
 
 Coding agents often do expensive, fragile things for simple local operations:
