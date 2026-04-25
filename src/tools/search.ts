@@ -180,7 +180,9 @@ export async function searchContext({
     maxOutputBytes,
   });
 
-  if (result.exitCode !== 0 && result.exitCode !== 1) {
+  // rg exits 0 on matches, 1 on no matches. Null exit code means killed (truncation or timeout).
+  // If truncated, we still parse what we got. Otherwise, it's a real error.
+  if (result.exitCode !== 0 && result.exitCode !== 1 && !result.truncated) {
     return {
       ok: false,
       tool: 'search_context',
