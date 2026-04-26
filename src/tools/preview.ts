@@ -60,5 +60,11 @@ export function previewFile({
     totalLines,
     content: preview,
     truncated,
+    ...(truncated
+      ? {
+          suggestion:
+            'Preview was capped. Use startLine and lineCount to read specific sections.',
+        }
+      : {}),
   };
 }

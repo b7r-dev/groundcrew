@@ -16,6 +16,45 @@ Coding agents often do expensive, fragile things for simple local operations:
 
 Groundcrew gives them safe local primitives for those actions, saving time and tokens.
 
+## With vs. without Groundcrew
+
+### Example 1: Moving a file
+
+**Without Groundcrew:**
+1. Read `src/utils/old.ts` (500 lines, ~8KB context)
+2. Write contents to `src/utils/new.ts` (another ~8KB output)
+3. Delete `src/utils/old.ts`
+4. Verify the move worked (read both paths)
+
+**With Groundcrew:**
+```json
+{ "tool": "move_path", "arguments": { "from": "src/utils/old.ts", "to": "src/utils/new.ts" } }
+```
+
+Result: ~50 bytes of JSON in, ~100 bytes of JSON out. No file contents touch the context.
+
+### Example 2: Finding a function definition
+
+**Without Groundcrew:**
+1. Read `src/server.ts` (800 lines, ~12KB context) — "Hmm, not here"
+2. Read `src/routes.ts` (600 lines, ~9KB context) — "Not here either"
+3. Read `src/handlers.ts` (400 lines, ~6KB context) — "Found it!"
+
+**With Groundcrew:**
+```json
+{ "tool": "search_context", "arguments": { "pattern": "function handleRequest", "path": "src" } }
+```
+
+Result: Returns the exact file, line number, and surrounding context (~200 bytes per match). If results are capped, a `suggestion` field tells you how to narrow the search.
+
+### Verifiable claims
+
+These examples describe real patterns we see in agent traces. You can verify the difference yourself:
+
+1. Check your agent's context window usage during file operations
+2. Count how many round-trips it takes to accomplish simple tasks
+3. Compare token estimates: reading a 500-line file (~4KB-8KB) vs. a 50-byte tool call
+
 ## What it is
 
 Groundcrew is a local stdio MCP server that exposes workspace-scoped, output-capped, dry-run-friendly wrappers around common developer operations.

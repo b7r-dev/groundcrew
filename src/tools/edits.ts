@@ -72,6 +72,12 @@ export function replaceText({
     changed,
     diffPreview: cappedDiff.output,
     truncatedDiff: cappedDiff.truncated,
+    ...(cappedDiff.truncated
+      ? {
+          suggestion:
+            'Diff preview was capped. The operation succeeded; use git_diff to see full changes.',
+        }
+      : {}),
   };
 }
 
@@ -148,5 +154,11 @@ export function replaceRegex({
     changed,
     diffPreview: cappedDiff.output,
     truncatedDiff: cappedDiff.truncated,
+    ...(cappedDiff.truncated
+      ? {
+          suggestion:
+            'Diff preview was capped. The operation succeeded; use git_diff to see full changes.',
+        }
+      : {}),
   };
 }

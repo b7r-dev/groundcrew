@@ -89,6 +89,8 @@ search_context (error message) → preview_file → replace_text
 | `VALIDATION_ERROR` | Missing required argument | Check the schema and provide required fields |
 | `CROSS_DEVICE` | Move across filesystems | Use `safe_move_path` instead |
 
+**Note:** When a tool returns `truncated: true`, it will also include a `suggestion` field with specific guidance on how to get the rest of the results (e.g., use `startLine`/`lineCount`, narrow your search, specify a path, etc.).
+
 ## Anti-Patterns (What NOT to Do)
 
 - **Don't** read an entire 1000-line file to find one function. Use `search_context` instead.

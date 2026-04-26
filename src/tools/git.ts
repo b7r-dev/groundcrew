@@ -73,6 +73,12 @@ export async function gitDiffStat({
     isGitRepo: true,
     stat: result.stdout,
     truncated: result.truncated,
+    ...(result.truncated
+      ? {
+          suggestion:
+            'Diff stat output was capped. Try specifying a path.',
+        }
+      : {}),
   };
 }
 
@@ -101,5 +107,11 @@ export async function gitDiff({
     diff: result.stdout,
     truncated: result.truncated,
     outputBytes: Buffer.byteLength(result.stdout, 'utf-8'),
+    ...(result.truncated
+      ? {
+          suggestion:
+            'Diff output was capped. Try specifying a path, or use git_diff_stat for an overview.',
+        }
+      : {}),
   };
 }

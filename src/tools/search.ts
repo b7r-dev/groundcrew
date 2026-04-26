@@ -116,6 +116,12 @@ export function findFiles({
     results: capped.items,
     count: capped.count,
     truncated: capped.truncated,
+    ...(capped.truncated
+      ? {
+          suggestion:
+            'Results were capped. Try a more specific query, a narrower glob, or lower maxResults.',
+        }
+      : {}),
   };
 }
 
@@ -226,14 +232,22 @@ export async function searchContext({
     maxOutputBytes,
   );
 
+  const isTruncated = result.truncated || truncated;
+
   return {
     ok: true,
     tool: 'search_context',
     matches,
     matchCount: matches.filter((m) => m.type === 'match').length,
     filesMatched,
-    truncated: result.truncated || truncated,
+    truncated: isTruncated,
     outputBytes,
     commandUsed: 'rg',
+    ...(isTruncated
+      ? {
+          suggestion:
+            'Output was capped. Try a more specific pattern, a narrower path scope, or lower maxResults.',
+        }
+      : {}),
   };
 }
