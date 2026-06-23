@@ -17,7 +17,21 @@ import { detectProject, listProjectCommands } from './tools/project.js';
 import { GroundcrewError, isGroundcrewError } from './errors.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const pkg = JSON.parse(fs.readFileSync(path.join(__dirname, '../../package.json'), 'utf-8'));
+
+function findPackageJson(): string {
+  const candidates = [
+    path.join(__dirname, '../package.json'), // dist/
+    path.join(__dirname, '../../package.json'), // src/
+  ];
+  for (const candidate of candidates) {
+    if (fs.existsSync(candidate)) {
+      return candidate;
+    }
+  }
+  throw new Error('package.json not found');
+}
+
+const pkg = JSON.parse(fs.readFileSync(findPackageJson(), 'utf-8'));
 
 const toolSchemas = {
   workspace_info: z.object({
