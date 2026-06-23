@@ -53,4 +53,15 @@ describe('preview_file', () => {
       expect((err as Error).message).toContain('directory');
     }
   });
+
+  it('endLine is stable under byte truncation', async () => {
+    // Create a file where 5 lines exceed the byte limit
+    const lines = Array.from({ length: 10 }, (_, i) => `line ${i + 1} ${'x'.repeat(500)}`);
+    fs.writeFileSync(path.join(tempDir, 'wide.txt'), lines.join('\n'));
+    const { previewFile } = await loadPreview();
+    const result = previewFile({ path: 'wide.txt', lineCount: 5, maxBytes: 100 });
+    expect(result.startLine).toBe(1);
+    expect(result.endLine).toBe(5);
+    expect(result.truncated).toBe(true);
+  });
 });

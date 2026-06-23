@@ -56,7 +56,7 @@ export function previewFile({
     tool: 'preview_file',
     path: relativePath,
     startLine: start,
-    endLine: start + preview.split('\n').length - 1,
+    endLine: end,
     totalLines,
     content: preview,
     truncated,
