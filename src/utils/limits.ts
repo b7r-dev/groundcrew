@@ -10,12 +10,19 @@ export function capOutput(text: string, maxBytes: number = DEFAULT_LIMITS.maxOut
   if (bytes.length <= maxBytes) {
     return { output: text, truncated: false, outputBytes: bytes.length };
   }
-  // Slice by bytes and decode safely
-  let slice = text;
-  while (encoder.encode(slice).length > maxBytes) {
-    slice = slice.slice(0, -1);
+  // Truncate the byte array and decode back. TextDecoder handles incomplete
+  // multi-byte sequences gracefully, but the replacement character can
+  // occasionally cause the re-encoded length to slightly exceed maxBytes.
+  // We trim one code-unit at a time until we are safely under the limit.
+  const truncatedBytes = bytes.slice(0, maxBytes);
+  const decoder = new TextDecoder('utf-8', { fatal: false });
+  let output = decoder.decode(truncatedBytes);
+  let outputBytes = encoder.encode(output).length;
+  while (outputBytes > maxBytes && output.length > 0) {
+    output = output.slice(0, -1);
+    outputBytes = encoder.encode(output).length;
   }
-  return { output: slice, truncated: true, outputBytes: encoder.encode(slice).length };
+  return { output, truncated: true, outputBytes };
 }
 
 export function capResults<T>(results: T[], maxResults: number = DEFAULT_LIMITS.maxResults): {
