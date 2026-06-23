@@ -4,6 +4,9 @@ import {
   ListToolsRequestSchema,
 } from '@modelcontextprotocol/sdk/types.js';
 import { z } from 'zod';
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { workspaceInfo } from './tools/workspace.js';
 import { pathInfo, ensureDir, movePath, copyPath, safeMovePath } from './tools/filesystem.js';
 import { findFiles, searchContext } from './tools/search.js';
@@ -12,6 +15,9 @@ import { gitStatus, gitDiffStat, gitDiff } from './tools/git.js';
 import { replaceText, replaceRegex } from './tools/edits.js';
 import { detectProject, listProjectCommands } from './tools/project.js';
 import { GroundcrewError, isGroundcrewError } from './errors.js';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const pkg = JSON.parse(fs.readFileSync(path.join(__dirname, '../../package.json'), 'utf-8'));
 
 const toolSchemas = {
   workspace_info: z.object({
@@ -128,7 +134,7 @@ export function createServer(): Server {
   const server = new Server(
     {
       name: 'groundcrew',
-      version: '0.1.0',
+      version: pkg.version,
     },
     {
       capabilities: {
