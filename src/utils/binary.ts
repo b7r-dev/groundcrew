@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import { GroundcrewError } from '../errors.js';
 
 const MAX_SCAN_BYTES = 8 * 1024;
 
@@ -39,10 +40,9 @@ export function isBinaryBuffer(buffer: Buffer): boolean {
 
 export function refuseBinary(absolutePath: string, operation: string): void {
   if (isBinaryFile(absolutePath)) {
-    const err = new Error(
+    throw new GroundcrewError(
+      'BINARY_FILE',
       `Refusing ${operation} on likely binary file: ${absolutePath}`,
     );
-    (err as Error & { code: string }).code = 'BINARY_FILE';
-    throw err;
   }
 }
