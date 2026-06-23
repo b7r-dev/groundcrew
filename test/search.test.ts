@@ -42,9 +42,9 @@ describe('search_context', () => {
     });
 
     expect(result.ok).toBe(true);
-    expect(result.truncated).toBe(true);
-    expect(result.matches.length).toBeGreaterThan(0);
-    expect(result.matchCount).toBeGreaterThan(0);
+    expect((result as any).truncated).toBe(true);
+    expect((result as any).matches.length).toBeGreaterThan(0);
+    expect((result as any).matchCount).toBeGreaterThan(0);
   });
 
   it('returns empty results when pattern has no matches', async () => {
@@ -56,9 +56,9 @@ describe('search_context', () => {
     });
 
     expect(result.ok).toBe(true);
-    expect(result.matches).toEqual([]);
-    expect(result.matchCount).toBe(0);
-    expect(result.filesMatched).toBe(0);
-    expect(result.truncated).toBe(false);
+    expect((result as any).matches).toEqual([]);
+    expect((result as any).matchCount).toBe(0);
+    expect((result as any).filesMatched).toBe(0);
+    expect((result as any).truncated).toBe(false);
   });
 });
