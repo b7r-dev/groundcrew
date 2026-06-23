@@ -62,11 +62,21 @@ export function unifiedDiff(
     );
 
     for (let k = i; k < oldEnd; k++) {
+      if (diff.length > maxLines) {
+        diff.push('... (diff truncated)');
+        break;
+      }
       diff.push('-' + originalLines[k]);
     }
+    if (diff.length > maxLines) break;
     for (let k = j; k < newEnd; k++) {
+      if (diff.length > maxLines) {
+        diff.push('... (diff truncated)');
+        break;
+      }
       diff.push('+' + modifiedLines[k]);
     }
+    if (diff.length > maxLines) break;
 
     i = oldEnd;
     j = newEnd;
