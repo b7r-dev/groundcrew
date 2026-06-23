@@ -80,4 +80,38 @@ describe('replace_regex', () => {
     expect(result.changed).toBe(true);
     expect(fs.readFileSync(path.join(tempDir, 're2.txt'), 'utf-8')).toBe('foo NUM bar 456');
   });
+
+  it('non-global regex respects maxReplacements=0', async () => {
+    fs.writeFileSync(path.join(tempDir, 're3.txt'), 'foo 123 bar 456');
+    const { replaceRegex } = await loadEdits();
+    const result = replaceRegex({
+      path: 're3.txt',
+      pattern: '\\d+',
+      replacement: 'NUM',
+      flags: '',
+      maxReplacements: 0,
+      dryRun: false,
+    });
+    expect(result.changed).toBe(false);
+    expect(result.matches).toBe(1);
+    expect(result.replacements).toBe(0);
+    expect(fs.readFileSync(path.join(tempDir, 're3.txt'), 'utf-8')).toBe('foo 123 bar 456');
+  });
+
+  it('non-global regex replaces 1 match by default', async () => {
+    fs.writeFileSync(path.join(tempDir, 're4.txt'), 'foo 123 bar 456');
+    const { replaceRegex } = await loadEdits();
+    const result = replaceRegex({
+      path: 're4.txt',
+      pattern: '\\d+',
+      replacement: 'NUM',
+      flags: '',
+      maxReplacements: 1,
+      dryRun: false,
+    });
+    expect(result.changed).toBe(true);
+    expect(result.matches).toBe(1);
+    expect(result.replacements).toBe(1);
+    expect(fs.readFileSync(path.join(tempDir, 're4.txt'), 'utf-8')).toBe('foo NUM bar 456');
+  });
 });

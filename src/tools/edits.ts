@@ -129,9 +129,13 @@ export function replaceRegex({
       return match;
     });
   } else {
-    const match = original.match(regex);
-    matches = match ? match.length : 0;
-    replaced = original.replace(regex, replacement);
+    const matchResult = original.match(regex);
+    matches = matchResult ? 1 : 0;
+    if (maxReplacements > 0) {
+      replaced = original.replace(regex, replacement);
+    } else {
+      replaced = original;
+    }
   }
 
   const changed = original !== replaced;
@@ -149,7 +153,13 @@ export function replaceRegex({
     tool: 'replace_regex',
     path: relativePath,
     matches,
-    replacements: changed ? (flags.includes('g') ? Math.min(matches, maxReplacements) : 1) : 0,
+    replacements: changed
+      ? flags.includes('g')
+        ? Math.min(matches, maxReplacements)
+        : maxReplacements > 0
+          ? 1
+          : 0
+      : 0,
     dryRun,
     changed,
     diffPreview: cappedDiff.output,
