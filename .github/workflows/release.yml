@@ -5,8 +5,12 @@ on:
     tags:
       - 'v*.*.*'
 
+# npm requires interactive 2FA for publishes, so releases are published
+# manually (npm login && npm publish --access public), not from CI.
+# NPM_TOKEN is a stage-only token for user b7r_dev; it expires
+# ~2026-12-16 and is not usable for publishing.
 jobs:
-  publish:
+  verify:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -18,7 +22,6 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
-          registry-url: 'https://registry.npmjs.org'
 
       - run: npm ci
 
@@ -32,18 +35,11 @@ jobs:
 
       - run: npm run smoke
 
-      - name: Check if version is already on npm
-        id: published
+      - name: Check npm release status
         run: |
           VERSION=$(node -p "require('./package.json').version")
           if npm view "@b7r_dev/groundcrew@$VERSION" version >/dev/null 2>&1; then
-            echo "exists=true" >> "$GITHUB_OUTPUT"
+            echo "@b7r_dev/groundcrew@$VERSION is published on npm."
           else
-            echo "exists=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::@b7r_dev/groundcrew@$VERSION is not on npm yet. Publish manually (requires 2FA): npm login && npm publish --access public"
           fi
-
-      - name: Publish to npm
-        if: steps.published.outputs.exists != 'true'
-        run: npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
